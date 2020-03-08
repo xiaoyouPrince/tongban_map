@@ -7,8 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <BaiduMapAPI_Map/BMKMapView.h>
+
 #import <CoreLocation/CoreLocation.h>
+#import <BaiduMapAPI_Map/BMKMapView.h>
+#import <BaiduMapAPI_Map/BMKPinAnnotationView.h>
+#import <BaiduMapAPI_Map/BMKPointAnnotation.h>
 
 @interface ZKLoactionAnotation : NSObject<BMKAnnotation>
 
