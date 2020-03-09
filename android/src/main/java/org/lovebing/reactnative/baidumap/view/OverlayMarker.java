@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2016-present, lovebing.org.
- *
+ * <p>
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
@@ -12,9 +12,18 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Animatable;
 import android.net.Uri;
+import android.os.Build;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+
 import com.baidu.mapapi.clusterutil.clustering.ClusterItem;
 import com.baidu.mapapi.map.*;
 import com.baidu.mapapi.model.LatLng;
@@ -34,6 +43,7 @@ import com.facebook.imagepipeline.image.CloseableStaticBitmap;
 import com.facebook.imagepipeline.image.ImageInfo;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
+
 import org.lovebing.reactnative.baidumap.R;
 
 import java.util.Objects;
@@ -56,8 +66,8 @@ public class OverlayMarker extends View implements OverlayView, ClusterItem {
                 @Override
                 public void onFinalImageSet(
                         String id,
-                         final ImageInfo imageInfo,
-                         Animatable animatable) {
+                        final ImageInfo imageInfo,
+                        Animatable animatable) {
                     CloseableReference<CloseableImage> imageReference = null;
                     try {
                         imageReference = dataSource.getResult();
@@ -87,12 +97,12 @@ public class OverlayMarker extends View implements OverlayView, ClusterItem {
         init();
     }
 
-    public OverlayMarker(Context context,  AttributeSet attrs) {
+    public OverlayMarker(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public OverlayMarker(Context context,  AttributeSet attrs, int defStyleAttr) {
+    public OverlayMarker(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -111,7 +121,7 @@ public class OverlayMarker extends View implements OverlayView, ClusterItem {
     }
 
     @TargetApi(21)
-    public OverlayMarker(Context context,  AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public OverlayMarker(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
@@ -121,6 +131,9 @@ public class OverlayMarker extends View implements OverlayView, ClusterItem {
 
     public void setTitle(String title) {
         this.title = title;
+        if (marker != null) {
+            marker.setPosition(position);
+        }
     }
 
     @Override
@@ -242,6 +255,7 @@ public class OverlayMarker extends View implements OverlayView, ClusterItem {
                 && position.longitude == that.position.longitude;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public int hashCode() {
         return Objects.hash(position.latitude, position.longitude);
@@ -273,7 +287,39 @@ public class OverlayMarker extends View implements OverlayView, ClusterItem {
                 getContext().getPackageName());
     }
 
-    private BitmapDescriptor getBitmapDescriptorByName(String name) {
-        return BitmapDescriptorFactory.fromResource(getDrawableResourceByName(name));
+    private BitmapDescriptor getBitmapDescriptorByName(String uri) {
+
+        BitmapDescriptor bitmap;
+//        if (!TextUtils.isEmpty(option.getString(Constant.MAIN_MARKER)) && option.getString(Constant.MAIN_MARKER).equals(Constant.MAIN_MARKER)) {
+//            LinearLayout mMainMarker = (LinearLayout) LayoutInflater.from(mReactContext).inflate(R.layout.item_location_main, null);
+//            TextView tv_content = (TextView) mMainMarker.findViewById(R.id.tv_content);
+//            tv_content.setText(option.getString("title"));
+//            bitmap = BitmapDescriptorFactory.fromView(mMainMarker);
+//        } else {
+//            if (!TextUtils.isEmpty(option.getString("title")) && option.getString("title").equals("my_location")) {
+//                bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.my_location);
+//            } else {
+//                TextView mview = (TextView) LayoutInflater.from(mReactContext).inflate(R.layout.item_marker, null);
+//                mview.setText(marker.getTitle());
+//                bitmap = BitmapDescriptorFactory.fromView(mview);
+//            }
+//        }
+//        LinearLayout mMainMarker = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.item_location_main, null);
+//        TextView tv_content = (TextView) mMainMarker.findViewById(R.id.tv_content);
+//        tv_content.setText(getTitle());
+//        bitmap = BitmapDescriptorFactory.fromView(mMainMarker);
+        if (uri.contains("location")) {
+            bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.my_location);
+        } else {
+            String result = "";
+            if (!TextUtils.isEmpty(uri)) {
+                result = uri.split("_")[0];
+            }
+            TextView mTextView = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.item_marker, null);
+            mTextView.setText(result);
+            bitmap = BitmapDescriptorFactory.fromView(mTextView);
+        }
+//        return BitmapDescriptorFactory.fromResource(getDrawableResourceByName(name));
+        return bitmap;
     }
 }

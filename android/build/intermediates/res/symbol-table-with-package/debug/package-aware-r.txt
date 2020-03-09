@@ -1,0 +1,26 @@
+org.lovebing.reactnative.baidumap
+anim pop_hide
+anim pop_show
+drawable main_marker
+drawable normal
+drawable popup
+drawable select
+id ll_go_to
+id text
+id tv_content
+id tv_text
+layout item_location_main
+layout item_marker
+layout layout_marker
+layout text_bubble
+mipmap arrow
+mipmap icon_gcoding
+mipmap location_right
+mipmap main_marker
+mipmap my_location
+mipmap normal
+mipmap select
+style Bubble_TextAppearance_Dark
+style Bubble_TextAppearance_Light
+style ClusterIcon_TextAppearance
+style Popuwindow

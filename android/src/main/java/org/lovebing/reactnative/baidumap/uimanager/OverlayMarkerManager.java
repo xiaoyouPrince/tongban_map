@@ -1,16 +1,20 @@
 /**
  * Copyright (c) 2016-present, lovebing.org.
- *
+ * <p>
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
 
 package org.lovebing.reactnative.baidumap.uimanager;
 
+import android.text.TextUtils;
+
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
+
+import org.json.JSONObject;
 import org.lovebing.reactnative.baidumap.util.LatLngUtil;
 import org.lovebing.reactnative.baidumap.view.OverlayMarker;
 
@@ -31,13 +35,24 @@ public class OverlayMarkerManager extends SimpleViewManager<OverlayMarker> {
         overlayMarker.setTitle(title);
     }
 
+    @ReactProp(name = "content")
+    public void setContent(OverlayMarker overlayMarker, String content) {
+        overlayMarker.setTitle(content);
+    }
+
     @ReactProp(name = "location")
     public void setLocation(OverlayMarker overlayMarker, ReadableMap position) {
         overlayMarker.setPosition(LatLngUtil.fromReadableMap(position));
     }
 
+    /**
+     * 传的参数 title_companyId_address_location
+     * @param overlayMarker
+     * @param uri
+     */
     @ReactProp(name = "icon")
     public void setIcon(OverlayMarker overlayMarker, String uri) {
+        overlayMarker.setTitle(uri);
         overlayMarker.setIcon(uri);
     }
 
@@ -61,4 +76,40 @@ public class OverlayMarkerManager extends SimpleViewManager<OverlayMarker> {
         overlayMarker.setFlat(flat);
     }
 
+    static class ContentBean {
+
+        /**
+         * companyId : 公司Id
+         * isPoint : true
+         * address : 公司地址
+         */
+
+        private String companyId;
+        private boolean isPoint;
+        private String address;
+
+        public String getCompanyId() {
+            return companyId;
+        }
+
+        public void setCompanyId(String companyId) {
+            this.companyId = companyId;
+        }
+
+        public boolean isIsPoint() {
+            return isPoint;
+        }
+
+        public void setIsPoint(boolean isPoint) {
+            this.isPoint = isPoint;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+    }
 }

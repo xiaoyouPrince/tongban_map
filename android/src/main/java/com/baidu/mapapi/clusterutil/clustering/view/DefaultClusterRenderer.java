@@ -800,6 +800,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
                         }
                         onBeforeClusterItemRendered(item, markerOptions);
                         marker = mClusterManager.getMarkerCollection().addMarker(markerOptions);
+                        marker.setTitle(item.getTitle());
                         markerWithPosition = new MarkerWithPosition(marker);
                         mMarkerCache.put(item, marker);
                         if (animateFrom != null) {
