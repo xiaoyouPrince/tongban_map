@@ -14,6 +14,11 @@
     return @"marker";
 }
 
+- (NSDictionary *)icon
+{
+    return _content;
+}
+
 - (void)addToMap:(BMKMapView *)mapView {
     [mapView addAnnotation:[self getAnnotation]];
 }
