@@ -10,7 +10,6 @@
 #import "FFLoactionAnotation.h"
 
 
-
 #define kCalloutWidth       200.0
 #define kCalloutHeight      30.0
 

@@ -18,6 +18,7 @@
 
 @property (nonatomic, weak) RCTBridge *bridge;
 @property (nonatomic, strong) NSDictionary *location;
+@property (nonatomic, strong) NSDictionary *icon;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) BMKPointAnnotation *annotation;
 

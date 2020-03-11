@@ -17,6 +17,8 @@
 @property (nonatomic, copy) NSString *companyId;
 @property (nonatomic, copy) NSString *address;
 
+@property (nonatomic, copy) NSString *uri;
+
 @property (nonatomic, assign) BOOL selected;
 
 - (instancetype)initWithtitle:(NSString *)title latitude:(NSString *)latitude longtitude:(NSString *)longtitude;

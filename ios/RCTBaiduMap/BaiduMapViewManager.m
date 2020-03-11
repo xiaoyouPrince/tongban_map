@@ -89,9 +89,9 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, BaiduMapView) {
         NSDictionary* event = @{
                                 @"type": @"onMarkerClick",
                                 @"params": @{
-                                        @"title": [[view annotation] title],
-                                        @"companyId":ann.companyId,
-                                        @"address":ann.address,
+                                        @"title": ann.uri,
+//                                        @"companyId":ann.companyId,
+//                                        @"address":ann.address,
                                         @"position": @{
                                                 @"latitude": @([[view annotation] coordinate].latitude),
                                                 @"longitude": @([[view annotation] coordinate].longitude)

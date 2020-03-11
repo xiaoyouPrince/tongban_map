@@ -310,6 +310,15 @@ public class OverlayMarker extends View implements OverlayView, ClusterItem {
 //        bitmap = BitmapDescriptorFactory.fromView(mMainMarker);
         if (uri.contains("location")) {
             bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.my_location);
+        } else if (uri.contains("guideLocation")) {
+            String result = "";
+            if (!TextUtils.isEmpty(uri)) {
+                result = uri.split("_")[0];
+            }
+            LinearLayout mMainMarker = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.item_location_main, null);
+            TextView tv_content = (TextView) mMainMarker.findViewById(R.id.tv_content);
+            tv_content.setText(result);
+            bitmap = BitmapDescriptorFactory.fromView(mMainMarker);
         } else {
             String result = "";
             if (!TextUtils.isEmpty(uri)) {
