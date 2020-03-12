@@ -7,8 +7,12 @@
 //
 
 #import "BaiduMapViewManager.h"
-
+@interface BaiduMapViewManager ()<customAnnotationViewDelegate>
+@property (nonatomic, strong) NSMutableArray *annotions;
+@property (nonatomic,strong) BaiduMapView *mapView;
+@end
 @implementation BaiduMapViewManager;
+
 
 static NSString *markerIdentifier = @"markerIdentifier";
 static NSString *clusterIdentifier = @"clusterIdentifier";
@@ -43,6 +47,7 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, BaiduMapView) {
 - (UIView *)view {
     BaiduMapView* mapView = [[BaiduMapView alloc] init];
     mapView.delegate = self;
+    _mapView = mapView;
     return mapView;
 }
 
@@ -255,8 +260,26 @@ RCT_CUSTOM_VIEW_PROPERTY(center, CLLocationCoordinate2D, BaiduMapView) {
     return nil;
 }
 
+#pragma mark -FFCustomAnnotationView Delegate
+- (void)customViewDidSelected:(id<BMKAnnotation>)anntation annotationView:(FFCustomAnnotationView *)annotationView{
+    if ([anntation isKindOfClass:[FFLoactionAnotation class]]) {
+        FFLoactionAnotation *locationAnotion = (FFLoactionAnotation *)anntation;
+        NSMutableArray *newArray = [NSMutableArray new];
+        for (FFLoactionAnotation *oldAnotation in self.annotions) {
+            BOOL ifEqual = [oldAnotation.title isEqualToString:locationAnotion.title];
+            oldAnotation.selected = ifEqual ? YES : NO;
+            [newArray addObject:oldAnotation];
+        }
+        [_mapView removeAnnotations:self.annotions];
+        [self.annotions removeAllObjects];
+        self.annotions = newArray;
+        [_mapView addAnnotations:self.annotions];
+    }
+}
+
 - (void)mapStatusDidChanged: (BMKMapView *)mapView {
     CLLocationCoordinate2D targetGeoPt = [mapView getMapStatus].targetGeoPt;
+    
     NSDictionary* event = @{
                             @"type": @"onMapStatusChange",
                             @"params": @{

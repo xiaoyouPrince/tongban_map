@@ -58,6 +58,7 @@
     }
 }
 
+
 - (void)removeReactSubview:(id <RCTComponent>)subview {
     NSLog(@"removeReactSubview");
     if ([subview isKindOfClass:[OverlayView class]]) {
@@ -184,6 +185,14 @@
     return coor;//[JZLocationConverter gcj02ToBd09:coor];
 }
 
-
+-(void)updateMarker:(BMKPointAnnotation *)annotation option:(NSDictionary *)option {
+    CLLocationCoordinate2D coor = [self getCoorFromMarkerOption:option];
+    NSString *title = [RCTConvert NSString:option[@"title"]];
+    if(title.length == 0) {
+        title = nil;
+    }
+    annotation.coordinate = coor;
+    annotation.title = title;
+}
 
 @end

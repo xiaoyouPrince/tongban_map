@@ -19,7 +19,7 @@
 #import "ZKLoactionAnotation.h"
 #import "ZKCustomAnnotationView.h"
 
-@interface BaiduMapViewManager : RCTViewManager<BMKMapViewDelegate>
+@interface BaiduMapViewManager : RCTViewManager<BMKMapViewDelegate,customAnnotationViewDelegate>
 
 + (void)initSDK:(NSString *)key;
 

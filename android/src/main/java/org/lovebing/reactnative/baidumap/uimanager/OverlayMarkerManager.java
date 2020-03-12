@@ -52,7 +52,6 @@ public class OverlayMarkerManager extends SimpleViewManager<OverlayMarker> {
      */
     @ReactProp(name = "icon")
     public void setIcon(OverlayMarker overlayMarker, String uri) {
-        overlayMarker.setTitle(uri);
         overlayMarker.setIcon(uri);
     }
 

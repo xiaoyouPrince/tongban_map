@@ -132,7 +132,9 @@ public class OverlayMarker extends View implements OverlayView, ClusterItem {
     public void setTitle(String title) {
         this.title = title;
         if (marker != null) {
+            marker.setTitle(title);
             marker.setPosition(position);
+            marker.setIcon(getBitmapDescriptorByName(title));
         }
     }
 
